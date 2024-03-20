@@ -1,4 +1,5 @@
-﻿using Cepedi.Domain;
+﻿using System.Text;
+using Cepedi.Domain;
 using Cepedi.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,4 +16,11 @@ public class CursoRepository : ICursoRepository
 
     public async Task<CursoEntity> ObtemCursoPorIdAsync(int idCurso) => 
     await _context.Curso.Where(curso => curso.Id == idCurso).FirstOrDefaultAsync();
+
+    public async Task CadastrarCursoAsync(CursoEntity curso)
+    {
+       _context.Set<CursoEntity>().Add(curso);
+        await _context.SaveChangesAsync();
+    }
+
 }

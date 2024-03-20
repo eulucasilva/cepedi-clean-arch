@@ -8,7 +8,7 @@ public class ObtemCursoHandler : IObtemCursoHandler
     private readonly IProfessorRepository _professorRepository;
 
     public ObtemCursoHandler(
-        ICursoRepository cursoRepository,
+        ICursoRepository cursoRepository,   
         IProfessorRepository professorRepository)
     {
         _cursoRepository = cursoRepository;
@@ -25,4 +25,6 @@ public class ObtemCursoHandler : IObtemCursoHandler
 
         return new ObtemCursoResponse(curso.Nome, duracao, professor.Nome);
     }
+
+    
 }
