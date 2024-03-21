@@ -23,4 +23,14 @@ public class CursoRepository : ICursoRepository
         await _context.SaveChangesAsync();
     }
 
+    public async Task AtualizaCursoAsync(CursoEntity curso){
+        _context.Curso.Update(curso);
+         await _context.SaveChangesAsync();
+    }
+
+    public async Task ExclueCursoAsync(CursoEntity curso)
+    {
+        _context.Curso.Remove(curso);
+        await _context.SaveChangesAsync();
+    }
 }

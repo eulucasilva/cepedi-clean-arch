@@ -15,10 +15,12 @@ namespace Cepedi.IoC
             ConfigureDbContext(services, configuration);
 
             services.AddScoped<ICadastrarCursoHandler, CadastrarCursoHandler>();
+            services.AddScoped<IExclueCursoHandler, ExclueCursoHandler>();
+            services.AddScoped<IAtualizaCursoHandler, AtualizaCursoHandler>();
             services.AddScoped<IObtemCursoHandler, ObtemCursoHandler>();
             services.AddScoped<IProfessorRepository, ProfessorRepository>();
             services.AddScoped<ICursoRepository, CursoRepository>();
-            
+
             //services.AddHttpContextAccessor();
 
             services.AddHealthChecks()
