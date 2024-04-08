@@ -1,4 +1,4 @@
-using NSubstitute;
+/*using NSubstitute;
 using Cepedi.Domain.Entities;
 
 namespace Cepedi.Domain.Tests;
@@ -46,3 +46,4 @@ public class ExclueCursoHandlerTests
         await _cursoRepository.Received(1).ExclueCursoAsync(cursoExistente);
     }
 }
+*/

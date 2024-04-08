@@ -1,7 +1,9 @@
 ﻿using Cepedi.Data;
 using Cepedi.Domain;
+using Cepedi.Shareable.Exceptions;
 using Cepedi.Shareable.Requests;
 using Cepedi.Shareable.Responses;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,46 +14,31 @@ namespace Cepedi.WebApi.Controllers;
 public class CursoController : ControllerBase
 {
     private readonly ILogger<CursoController> _logger;
-    private readonly IObtemCursoHandler _obtemCursoHandler;
-    private readonly ICadastrarCursoHandler _cadastrarCursoHandler;
-    private readonly IAtualizaCursoHandler _atualizaCursoHandler;
-    private readonly IExclueCursoHandler _exclueCursoHandler;
+    private readonly IMediator _mediator;
 
 
-    public CursoController(ILogger<CursoController> logger,
-    IObtemCursoHandler obtemCursoHandler, ICadastrarCursoHandler cadastrarCursoHandler,
-    IAtualizaCursoHandler atualizaCursoHandler, IExclueCursoHandler exclueCursoHandler)
+    public CursoController(ILogger<CursoController> logger, IMediator mediator)
     {
         _logger = logger;
-        _obtemCursoHandler = obtemCursoHandler;
-        _cadastrarCursoHandler = cadastrarCursoHandler;
-        _atualizaCursoHandler = atualizaCursoHandler;
-        _exclueCursoHandler = exclueCursoHandler;
+        _mediator = mediator;
     }
 
-    [HttpGet("{idCurso}")]
+    /*[HttpGet("{idCurso}")]
     public async Task<ActionResult<ObtemCursoResponse>> ConsultarCursoAsync([FromRoute] int idCurso)
     {
         return Ok(await _obtemCursoHandler.ObterCursoAsync(idCurso));
-    }
+    }*/
 
     [HttpPost]
-    public async Task<ActionResult> CadastrarCursoAsync([FromBody] CadastrarCursoRequest request)
+    [ProducesResponseType(typeof(CadastrarCursoResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseErro), StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<CadastrarCursoResponse>> CadastrarCursoAsync([FromBody] CadastrarCursoRequest request)
     {
 
-        var resultado = await _cadastrarCursoHandler.CadastrarCursoAsync(request);
-
-        if (resultado.Sucesso)
-        {
-            return Ok();
-        }
-        else
-        {
-            return BadRequest(resultado.Mensagem);
-        }
+       return await _mediator.Send(request);
     }
 
-    [HttpPut]
+    /*[HttpPut]
     public async Task<ActionResult> AtualizaCursoAsync([FromBody] AtualizaCursoRequest request)
     {
 
@@ -82,6 +69,6 @@ public class CursoController : ControllerBase
         {
             return BadRequest(resultado.Mensagem);
         }
-    }
+    }*/
 
 }
